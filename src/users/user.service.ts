@@ -3,7 +3,9 @@ import { User } from "./users.js";
 export default class UserService {
     async createUser(userData: { name: string; email: string; password: string }) {
 
-        const user = await User.create(userData);
+        //codigo para elminar error
+        const user = new User(userData);
+        await user.save();
         return user;
     }
 

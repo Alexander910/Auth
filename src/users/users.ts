@@ -1,7 +1,5 @@
 import mongoose, { Schema} from "mongoose";
 
-
-
 const UserSchema: Schema = new Schema(
   {
     name: {
@@ -27,4 +25,5 @@ const UserSchema: Schema = new Schema(
   }
 );
 
-export const User = mongoose.model("User", UserSchema);
+export const User = mongoose.model("Usertest", UserSchema);
+
