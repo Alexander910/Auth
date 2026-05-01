@@ -4,13 +4,13 @@ import { User } from "../users/users.js";
 import  generateToken  from "./jwt.js";
 export class AuthService{
 
-    async register(name:string,email:string,password:string){
+    async register(name:string,email:string,password:string,role?:string){
         if(!email || !password){
             throw new Error("Email y contraseña son requeridos");
         }
         const passwordHash = await bcrypt.hash(password,10)
         const userService = new UserService();
-        const user = await userService.createUser({name:name,email:email,password:passwordHash});
+        const user = await userService.createUser({name:name,email:email,password:passwordHash,role:role||"user"});
         return user;
     }
 
@@ -32,7 +32,8 @@ export class AuthService{
         const token = generateToken(
             {
                 id:user._id,
-                email:user.email
+                email:user.email,
+                role:user.role
             }
         )
 

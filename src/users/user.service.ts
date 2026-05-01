@@ -1,7 +1,7 @@
 import { User } from "./users.js";
 
 export default class UserService {
-    async createUser(userData: { name: string; email: string; password: string }) {
+    async createUser(userData: { name: string; email: string; password: string; role?: string }) {
 
         //codigo para elminar error
         const user = new User(userData);
@@ -13,4 +13,4 @@ export default class UserService {
         const user = await User.findById(userId);
         return user;
     }
-}
+}   
