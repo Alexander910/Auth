@@ -11,7 +11,11 @@ export class AuthService{
         const passwordHash = await bcrypt.hash(password,10)
         const userService = new UserService();
         const user = await userService.createUser({name:name,email:email,password:passwordHash,role:role||"user"});
-        return user;
+
+        const userResponse = user.toObject();
+        delete userResponse.password;
+
+        return userResponse;
     }
 
     async login(email:string,password:string){
@@ -37,9 +41,12 @@ export class AuthService{
             }
         )
 
+        const userResponse = user.toObject();
+        delete userResponse.password;
+
         return {
             accessToken:token,
-            user:user
+            user:userResponse
         }
     }
     
