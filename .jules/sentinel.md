@@ -1,0 +1,4 @@
+## 2025-05-15 - Mass Assignment and Sensitive Data Exposure in Auth
+**Vulnerability:** The `register` endpoint in `auth.controller.ts` allowed the `role` field to be passed directly from `req.body` to the service, enabling users to register themselves as 'admin'. Additionally, both `register` and `login` responses included the full Mongoose user object, leaking the hashed `password` field.
+**Learning:** Controllers that blindly destructure `req.body` or services that return raw Mongoose documents to the client can easily introduce critical security flaws like privilege escalation and data leakage.
+**Prevention:** Explicitly destructure only allowed fields from `req.body` in controllers. Ensure Mongoose documents are converted to plain objects and sensitive fields are deleted before sending them in a response.
