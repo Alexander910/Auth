@@ -11,6 +11,11 @@ export default class UserService {
 
     async getCurrentUser(userId: string) {
         const user = await User.findById(userId);
+        if (user) {
+            const userResponse = user.toObject();
+            delete (userResponse as any).password;
+            return userResponse;
+        }
         return user;
     }
 }   
