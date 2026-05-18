@@ -6,7 +6,7 @@ export default class UserService {
         //codigo para elminar error
         const user = new User(userData);
         await user.save();
-        return user;
+        return user.toObject();
     }
 
     async getCurrentUser(userId: string) {
