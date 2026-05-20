@@ -7,7 +7,7 @@ async function currentUser(req:any, res:any) {
     // Lógica para iniciar sesión
     const id = req.user.id; // Suponiendo que el email del usuario autenticado está disponible en req.user
     const user = await userService.getCurrentUser(id);
-    res.status(200).json(user);
+    res.status(200).json(user?.toObject());
 }
 
 export {
