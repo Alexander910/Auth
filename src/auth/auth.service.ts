@@ -8,7 +8,7 @@ export class AuthService{
         if(!email || !password){
             throw new Error("Email y contraseña son requeridos");
         }
-        const passwordHash = await bcrypt.hash(password,10)
+        const passwordHash = await bcrypt.hash(password,12)
         const userService = new UserService();
         const user = await userService.createUser({name:name,email:email,password:passwordHash,role:role||"user"});
         return user;
