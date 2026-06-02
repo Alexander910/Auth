@@ -1,0 +1,4 @@
+## 2025-05-22 - Mass Assignment and Sensitive Data Exposure
+**Vulnerability:** The registration endpoint allowed users to specify their own role (e.g., 'admin'), leading to privilege escalation. Additionally, user objects returned by the API included the hashed password field.
+**Learning:** In Mongoose-based applications, returning the document directly from a controller can leak all fields unless transformations are defined in the schema. Mass assignment occurs when the application blindly trusts request body fields for sensitive attributes like roles.
+**Prevention:** Always use explicit destructuring in controllers to only allow safe fields from `req.body`. Use Mongoose `toJSON` and `toObject` transforms with the `transform` option to globally exclude sensitive fields like `password` from serialization.
