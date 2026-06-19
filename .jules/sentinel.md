@@ -1,0 +1,4 @@
+## 2025-05-22 - Mass Assignment and Sensitive Data Exposure
+**Vulnerability:** The registration endpoint allowed users to provide a `role` field in the request body, which was then passed directly to the user creation service, enabling privilege escalation to 'admin'. Additionally, user objects returned from the API included the `password` hash.
+**Learning:** Destructuring `req.body` without filtering allowed fields is a common source of Mass Assignment vulnerabilities. Relying on default Mongoose behavior can lead to accidental exposure of sensitive fields like passwords.
+**Prevention:** Always explicitly destructure only the required fields from request bodies in controllers. Use Mongoose's `toJSON` and `toObject` transformations to globally exclude sensitive fields from serialized output.
