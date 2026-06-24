@@ -26,7 +26,21 @@ const UserSchema: Schema = new Schema(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+      transform: (doc, ret) => {
+        // ✅ Security fix: Remove password from JSON responses
+        const { password, ...rest } = ret;
+        return rest;
+      }
+    },
+    toObject: {
+      transform: (doc, ret) => {
+        // ✅ Security fix: Remove password when converting to object
+        const { password, ...rest } = ret;
+        return rest;
+      }
+    }
   }
 );
 
