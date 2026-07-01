@@ -2,12 +2,13 @@ import { AuthService } from "./auth.service.js";
 
 const authService = new AuthService();
 
-async function register(req:any,res:any){
-    const {name,email,password,role} = req.body;
+async function register(req: any, res: any) {
+    // Explicitly destructure only allowed fields to prevent Mass Assignment
+    const { name, email, password } = req.body;
     try {
-        const user = await authService.register(name,email,password,role)
+        const user = await authService.register(name, email, password)
         res.status(201).json(user)
-    } catch (error:any) {
+    } catch (error: any) {
         res.status(400).json({error:error.message})
     }
 }
