@@ -1,0 +1,4 @@
+## 2025-05-22 - Mass Assignment Vulnerability in User Registration
+**Vulnerability:** The registration endpoint (`/register`) was accepting a `role` field directly from the request body. This allowed any user to register as an 'admin' by simply including `"role": "admin"` in their registration request.
+**Learning:** Mass Assignment (or Overposting) occurs when an application automatically binds input parameters to internal models without proper filtering. In this case, the `role` field was being passed from the controller through the service to the Mongoose model.
+**Prevention:** Always explicitly destructure only the required and allowed fields from request bodies. Sensitive fields like `role`, `permissions`, or `balance` should never be accepted from unauthenticated or low-privilege user input.
