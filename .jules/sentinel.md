@@ -1,0 +1,4 @@
+## 2025-05-22 - Mass Assignment Privilege Escalation in User Registration
+**Vulnerability:** The user registration endpoint `/register` extracted the `role` property directly from the request body (`req.body`) and passed it down to the user creation service. This allowed self-registration with an 'admin' role, bypassing intended authorization controls.
+**Learning:** Destructuring input without explicit whitelist filtering directly in the entry points of controllers introduces severe mass assignment vulnerabilities. Passing request payloads directly to service layers or ORM/ODM model constructors exposes internal model properties.
+**Prevention:** Always explicitly select and whitelist allowed properties from incoming request payloads (`req.body`) at the controller/route level. Avoid propagating raw body parameters deep into database insertion operations, and hardcode default roles in the business logic flow where appropriate.
