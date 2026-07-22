@@ -26,7 +26,20 @@ const UserSchema: Schema = new Schema(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+      transform: (doc, ret) => {
+        // ✅ Secure: Destructure out sensitive fields and return the rest to avoid using 'delete' on non-optional fields
+        const { password, ...rest } = ret;
+        return rest;
+      }
+    },
+    toObject: {
+      transform: (doc, ret) => {
+        const { password, ...rest } = ret;
+        return rest;
+      }
+    }
   }
 );
 
