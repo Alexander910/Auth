@@ -1,0 +1,4 @@
+## 2025-05-22 - Mass Assignment Vulnerability in User Registration
+**Vulnerability:** A mass assignment vulnerability existed in the user registration endpoint (`/register`). The endpoint accepted a `role` parameter directly from the request body (`req.body`) and passed it to the user service, which allowed any registering user to grant themselves the `admin` role.
+**Learning:** Destructuring fields directly from user input without validation or sanitization is a dangerous practice when those fields map directly to high-privileged model attributes (like `role` or privileges).
+**Prevention:** Always explicitly select/destructure only safe, intended fields from the request body (e.g., `name`, `email`, `password`) in the controller, and enforce secure defaults/explicit hardcoded values in services or models.
