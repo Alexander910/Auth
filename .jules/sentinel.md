@@ -1,0 +1,4 @@
+## 2025-05-22 - Mass Assignment Privilege Escalation in User Registration
+**Vulnerability:** User registration endpoint allowed clients to pass arbitrary parameters in `req.body` such as `role`, which was then passed directly down to the database creation method, allowing any registering user to assign themselves the "admin" role.
+**Learning:** Destructuring and passing entire objects or arbitrary input directly to database layers can lead to Mass Assignment vulnerabilities. In this case, the `register` controller was pulling `role` from `req.body` and `AuthService` passed it along to the database creation helper.
+**Prevention:** Explicitly destructure only the allowed properties (`name`, `email`, `password`) from request bodies at the controller entrypoint, and hardcode default fields (like `role: "user"`) when calling user creation methods.
