@@ -4,13 +4,14 @@ import { User } from "../users/users.js";
 import  generateToken  from "./jwt.js";
 export class AuthService{
 
-    async register(name:string,email:string,password:string,role?:string){
+    // ✅ Security: Do not allow specifying user role during registration to prevent Privilege Escalation
+    async register(name:string,email:string,password:string){
         if(!email || !password){
             throw new Error("Email y contraseña son requeridos");
         }
         const passwordHash = await bcrypt.hash(password,10)
         const userService = new UserService();
-        const user = await userService.createUser({name:name,email:email,password:passwordHash,role:role||"user"});
+        const user = await userService.createUser({name:name,email:email,password:passwordHash,role:"user"});
         return user;
     }
 
