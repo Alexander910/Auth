@@ -1,0 +1,4 @@
+## 2025-03-02 - Mass Assignment Privilege Escalation in User Registration
+**Vulnerability:** An attacker could supply a `role: "admin"` property within the request body of the registration endpoint (`/register`) to elevate their privileges and gain unauthorized administrative access.
+**Learning:** The application allowed mass assignment because the registration controller was destructuring the `role` parameter directly from `req.body` and passing it to `AuthService.register()`, which in turn passed it to the user creation service.
+**Prevention:** Always restrict request body parameters in controllers by explicitly destructuring only safe fields (e.g., `name`, `email`, `password`) and ignoring or sanitizing others. Hardcode administrative or elevated flags/roles so they cannot be populated via standard registration endpoints.
