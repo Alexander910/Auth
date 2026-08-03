@@ -26,7 +26,21 @@ const UserSchema: Schema = new Schema(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    // ✅ Security Fix: Exclude password from JSON serialization to prevent Sensitive Data Exposure
+    toJSON: {
+      transform: (doc, ret) => {
+        const { password, ...rest } = ret;
+        return rest;
+      }
+    },
+    // ✅ Security Fix: Exclude password from Object representation to prevent Sensitive Data Exposure
+    toObject: {
+      transform: (doc, ret) => {
+        const { password, ...rest } = ret;
+        return rest;
+      }
+    }
   }
 );
 
