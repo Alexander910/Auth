@@ -30,5 +30,20 @@ const UserSchema: Schema = new Schema(
   }
 );
 
+// Security: Add transforms to exclude sensitive fields (password, __v) from API responses
+UserSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    const { password, __v, ...rest } = ret;
+    return rest;
+  }
+});
+
+UserSchema.set("toObject", {
+  transform: (doc, ret) => {
+    const { password, __v, ...rest } = ret;
+    return rest;
+  }
+});
+
 export const User = mongoose.model("Usertest", UserSchema);
 
