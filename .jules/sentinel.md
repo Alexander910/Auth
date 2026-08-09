@@ -1,0 +1,4 @@
+## 2026-05-01 - Mass Assignment vulnerability in user registration
+**Vulnerability:** Mass assignment during registration. The endpoint extracted `role` from the request body and forwarded it to the registration service, allowing newly registered users to elevate their privileges by self-assigning the 'admin' role.
+**Learning:** Destructuring `req.body` without strict whitelist filtering, or trusting input parameters downstream in the service layer, can lead to severe privilege escalation vulnerabilities.
+**Prevention:** Always explicitly destructure only the allowed properties in controllers (`const { name, email, password } = req.body;`) and enforce default or safe values (e.g. `role: "user"`) at the service layer when creating documents, completely ignoring any unauthorized properties passed in the request body.
