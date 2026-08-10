@@ -1,0 +1,4 @@
+## 2025-03-01 - Mass Assignment in User Registration
+**Vulnerability:** Mass Assignment/Privilege Escalation. In the user registration endpoint, the application accepted arbitrary fields from `req.body` (such as `role`) and passed them directly to the user creation service. This allowed an unauthenticated attacker to register an account with administrator privileges (by setting `role: "admin"`).
+**Learning:** Accepting unvalidated or unrestricted input directly from the client request payload and spreading or passing it directly to database document creation or update models leads to privilege escalation and state corruption.
+**Prevention:** Always explicitly destructure and whitelist only the fields that are allowed to be modified or registered by the client. Never trust incoming client request objects implicitly, and hardcode default properties such as `role` on the server-side to prevent unauthorized modifications.
