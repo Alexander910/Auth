@@ -30,5 +30,19 @@ const UserSchema: Schema = new Schema(
   }
 );
 
-export const User = mongoose.model("Usertest", UserSchema);
+// Remove password field when converting document to JSON or Object
+UserSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    const { password, ...rest } = ret;
+    return rest;
+  }
+});
 
+UserSchema.set("toObject", {
+  transform: (doc, ret) => {
+    const { password, ...rest } = ret;
+    return rest;
+  }
+});
+
+export const User = mongoose.model("Usertest", UserSchema);
