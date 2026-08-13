@@ -1,0 +1,4 @@
+## 2025-08-13 - Mass Assignment in User Registration
+**Vulnerability:** Mass Assignment vulnerability allowing unauthenticated users to register accounts with administrative privileges. The `register` endpoint destructured `role` from `req.body` and passed it down to `AuthService.register`, which passed it to the database creation logic.
+**Learning:** By allowing client-supplied properties to directly dictate database fields such as roles, attackers can perform privilege escalation and gain administrative permissions.
+**Prevention:** Always explicitly whitelist/destructure only the expected client inputs (such as name, email, and password) at the controller or service layer. Never trust inputs to map directly to database fields without validation or overriding critical attributes (like default role).
