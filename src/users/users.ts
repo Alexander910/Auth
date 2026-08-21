@@ -1,4 +1,9 @@
-import mongoose, { Schema} from "mongoose";
+import mongoose, { Schema } from "mongoose";
+
+const transformUser = (doc: any, ret: any) => {
+  const { password, ...rest } = ret;
+  return rest;
+};
 
 const UserSchema: Schema = new Schema(
   {
@@ -26,7 +31,9 @@ const UserSchema: Schema = new Schema(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    toJSON: { transform: transformUser },
+    toObject: { transform: transformUser }
   }
 );
 
