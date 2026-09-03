@@ -2,7 +2,10 @@ import jwt from "jsonwebtoken"
 
 export function authMiddleware(req:any,res:any,next:any){
     try {
-        const secretKey:any = process.env.JWT_SECRET;
+        const secretKey = process.env.JWT_SECRET;
+        if (!secretKey) {
+            return res.status(500).json({ message: "Error de configuración del servidor" });
+        }
 
         const authHeader = req.headers.authorization;
 
