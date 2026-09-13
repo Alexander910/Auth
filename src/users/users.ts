@@ -30,5 +30,19 @@ const UserSchema: Schema = new Schema(
   }
 );
 
+UserSchema.set("toJSON", {
+  transform: (_doc, ret) => {
+    const { password, ...rest } = ret;
+    return rest;
+  }
+});
+
+UserSchema.set("toObject", {
+  transform: (_doc, ret) => {
+    const { password, ...rest } = ret;
+    return rest;
+  }
+});
+
 export const User = mongoose.model("Usertest", UserSchema);
 
