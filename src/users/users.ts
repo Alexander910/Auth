@@ -26,7 +26,20 @@ const UserSchema: Schema = new Schema(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    // Security: Automatically exclude password hash from JSON and object outputs to prevent sensitive data exposure
+    toJSON: {
+      transform: (_doc, ret) => {
+        const { password, ...rest } = ret;
+        return rest;
+      }
+    },
+    toObject: {
+      transform: (_doc, ret) => {
+        const { password, ...rest } = ret;
+        return rest;
+      }
+    }
   }
 );
 
