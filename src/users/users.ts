@@ -26,7 +26,19 @@ const UserSchema: Schema = new Schema(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+      transform: (_doc, ret) => {
+        const { password, __v, ...rest } = ret;
+        return rest;
+      }
+    },
+    toObject: {
+      transform: (_doc, ret) => {
+        const { password, __v, ...rest } = ret;
+        return rest;
+      }
+    }
   }
 );
 
