@@ -26,7 +26,21 @@ const UserSchema: Schema = new Schema(
     }
   },
   {
-    timestamps: true
+    timestamps: true,
+    toJSON: {
+      transform(_doc, ret) {
+        // Prevent sensitive data (password) and internal version key (__v) from being exposed in JSON responses
+        const { password, __v, ...rest } = ret;
+        return rest;
+      }
+    },
+    toObject: {
+      transform(_doc, ret) {
+        // Prevent sensitive data (password) and internal version key (__v) from being exposed in Object representations
+        const { password, __v, ...rest } = ret;
+        return rest;
+      }
+    }
   }
 );
 
