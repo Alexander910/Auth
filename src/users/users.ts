@@ -30,5 +30,20 @@ const UserSchema: Schema = new Schema(
   }
 );
 
+// Omit password hash from serialized JSON and object representations
+UserSchema.set("toJSON", {
+  transform: (_doc, ret) => {
+    const { password, ...rest } = ret;
+    return rest;
+  }
+});
+
+UserSchema.set("toObject", {
+  transform: (_doc, ret) => {
+    const { password, ...rest } = ret;
+    return rest;
+  }
+});
+
 export const User = mongoose.model("Usertest", UserSchema);
 
