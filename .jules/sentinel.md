@@ -1,0 +1,4 @@
+## 2026-05-01 - Privilege Escalation via Mass Assignment on User Registration
+**Vulnerability:** The public user registration endpoint (`POST /register`) accepted the `role` parameter from `req.body`, and `AuthService.register()` accepted and passed the `role` directly into MongoDB document creation, allowing any unauthenticated user to register as an `admin`.
+**Learning:** Public registration endpoints should never expose administrative or authorization flags to client input. Even if a field is optional, accepting it without authorization checks can lead to complete privilege escalation.
+**Prevention:** Explicitly destructure only allowed fields (`name`, `email`, `password`) in registration controllers, and enforce default non-privileged roles (e.g. `role: "user"`) strictly at the service layer.
